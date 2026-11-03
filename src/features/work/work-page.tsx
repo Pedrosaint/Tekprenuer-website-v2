@@ -34,7 +34,12 @@ export function Component() {
         <Heading id="portfolio-title" level={2} className="sr-only">
           Projects
         </Heading>
-        <div role="group" aria-label="Filter projects by sector" className="mb-10 flex flex-wrap justify-center gap-2">
+        {/* One swipeable line on phones (it bleeds to the screen edges); wraps and centres from the sm breakpoint up. */}
+        <div
+          role="group"
+          aria-label="Filter projects by sector"
+          className="mb-10 flex gap-2 overflow-x-auto overscroll-x-contain scrollbar-none max-sm:-mx-4 max-sm:px-4 sm:flex-wrap sm:justify-center"
+        >
           {sectors.map((sector) => (
             <button
               key={sector}
@@ -42,7 +47,7 @@ export function Component() {
               aria-pressed={sector === active}
               onClick={() => choose(sector)}
               className={cn(
-                'inline-flex min-h-11 items-center rounded-lg border-2 px-5 text-base font-medium transition-colors',
+                'inline-flex min-h-11 shrink-0 items-center rounded-xl border-2 px-5 text-base font-medium whitespace-nowrap transition-colors',
                 sector === active
                   ? 'border-cta bg-cta text-cta-ink'
                   : 'border-line bg-raised text-ink hover:border-ink',

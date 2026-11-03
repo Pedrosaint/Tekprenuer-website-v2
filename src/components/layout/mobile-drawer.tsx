@@ -95,7 +95,7 @@ export function MobileDrawer({ open, onClose, returnFocusTo }: MobileDrawerProps
                   type="button"
                   onClick={onClose}
                   aria-label="Close menu"
-                  className="inline-flex size-11 items-center justify-center rounded-lg text-ink transition-colors hover:bg-white/10"
+                  className="inline-flex size-11 items-center justify-center rounded-xl text-ink transition-colors hover:bg-white/10"
                 >
                   <HugeIcon icon={Cancel01Icon} size={22} />
                 </button>

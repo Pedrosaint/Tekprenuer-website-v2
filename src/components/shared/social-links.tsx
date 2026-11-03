@@ -20,7 +20,7 @@ export function SocialLinks({ className }: { className?: string }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${social.label} (opens in a new tab)`}
-              className="inline-flex size-11 items-center justify-center rounded-lg border border-line text-ink transition-colors hover:border-ink/50"
+              className="inline-flex size-11 items-center justify-center rounded-xl border border-line text-ink transition-colors hover:border-ink/50"
             >
               {glyph && <HugeIcon icon={glyph} size={20} />}
             </a>

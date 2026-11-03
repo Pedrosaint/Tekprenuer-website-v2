@@ -10,8 +10,8 @@ import { cn } from '../../lib/cn'
  * square chip carries an arrow that starts tilted and straightens on hover. No shadows, no gradients.
  */
 const variants = {
-  /** Context-aware: royal blue on light surfaces, orange on dark ones (see --cta tokens). */
-  primary: 'border-cta bg-cta text-cta-ink before:bg-ink hover:text-surface',
+  /** Context-aware: brand navy (sweeping to royal blue on hover) on light surfaces, orange on dark ones (see --cta tokens). */
+  primary: 'border-cta bg-cta text-cta-ink before:bg-cta-sweep hover:text-surface',
   accent: 'border-orange-400 bg-orange-400 text-navy-950 before:bg-white hover:text-navy-950',
   secondary: 'border-ink bg-transparent text-ink before:bg-ink hover:text-surface',
   ghost: 'border-transparent text-ink before:bg-ink/10',
@@ -31,6 +31,8 @@ interface BaseProps {
   /** Trailing arrow chip. */
   arrow?: boolean
   icon?: ReactNode
+  /** The children are an accessible name only: they are visually hidden and must not take part in the layout (no gap). */
+  iconOnly?: boolean
   fullWidth?: boolean
   className?: string
   children: ReactNode
@@ -43,10 +45,10 @@ type AsLink = BaseProps & Omit<ComponentProps<typeof Link>, keyof BaseProps | 't
 export type ButtonProps = AsButton | AsAnchor | AsLink
 
 export function Button(props: ButtonProps) {
-  const { variant = 'primary', size = 'md', arrow = false, icon, fullWidth = false, className, children, ...rest } = props
+  const { variant = 'primary', size = 'md', arrow = false, icon, iconOnly = false, fullWidth = false, className, children, ...rest } = props
 
   const classes = cn(
-    'group relative isolate inline-flex items-center justify-center overflow-hidden rounded-lg border font-medium whitespace-nowrap',
+    'group relative isolate inline-flex items-center justify-center overflow-hidden rounded-xl border font-medium whitespace-nowrap',
     'transition-colors duration-300 active:translate-y-px disabled:pointer-events-none disabled:opacity-60',
     'before:absolute before:inset-0 before:-z-10 before:origin-left before:scale-x-0 before:transition-transform before:duration-300 before:ease-out hover:before:scale-x-100',
     variants[variant],
@@ -59,9 +61,10 @@ export function Button(props: ButtonProps) {
   const content = (
     <>
       {icon}
-      <span>{children}</span>
+      {/* sr-only is absolutely positioned, so it adds no flex item and no gap beside the icon. */}
+      <span className={iconOnly ? 'sr-only' : undefined}>{children}</span>
       {arrow && (
-        <span aria-hidden="true" className="inline-flex size-8 items-center justify-center rounded-md bg-current/15">
+        <span aria-hidden="true" className="inline-flex size-8 items-center justify-center rounded-lg bg-current/15">
           <HugeIcon icon={ArrowRight02Icon} size={18} className="-rotate-45 transition-transform duration-300 group-hover:rotate-0" />
         </span>
       )}

@@ -1,4 +1,4 @@
-import { ArrowLeft01Icon, ArrowRight01Icon, ArrowUpRight01Icon } from '@hugeicons/core-free-icons'
+import { ArrowUpRight01Icon } from '@hugeicons/core-free-icons'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Project } from '../../data/site-content'
@@ -8,7 +8,9 @@ import { Picture } from '../ui/picture'
 
 // Shown until the real number of pages is measured in the browser (9 projects, 3 per page on desktop).
 const FIRST_RENDER_PAGES = 3
-const AUTOPLAY_MS = 6000
+const AUTOPLAY_MS = 5000
+// How long autoplay stays put after the visitor touches, clicks or presses a key in the carousel.
+const HOLD_MS = 8000
 
 /** One project: a white logo card lifted over a translucent info card. The whole card links to the case study. */
 function WorkSlide({ project, index, total }: { project: Project; index: number; total: number }) {
@@ -22,7 +24,8 @@ function WorkSlide({ project, index, total }: { project: Project; index: number;
       <Link to={`/work/${project.slug}`} className="group relative flex w-full flex-col pt-28">
         <div
           className={cn(
-            'absolute top-0 left-8 z-10 flex h-40 w-[72%] items-center justify-center rounded-2xl p-6',
+            // Same size and the same margin on both sides for every project, so the logo card sits centred on the card below it.
+            'absolute inset-x-6 top-0 z-10 flex h-40 items-center justify-center rounded-2xl p-6',
             project.logoTone === 'light' ? 'bg-navy-950 ring-1 ring-white/30' : 'bg-white',
           )}
         >
@@ -33,7 +36,7 @@ function WorkSlide({ project, index, total }: { project: Project; index: number;
             className={cn('h-auto max-h-20 w-auto object-contain', project.logo === 'accessum' && 'max-h-14')}
           />
         </div>
-        <div className="flex-1 rounded-2xl border border-white/60 bg-white/10 px-6 pt-[5.25rem] pb-6 text-white transition-colors duration-300 group-hover:bg-white/20">
+        <div className="flex-1 rounded-2xl border border-white/60 bg-white/10 px-6 pt-21 pb-6 text-white transition-colors duration-300 group-hover:bg-white/20">
           <p className="text-base text-white">{project.category}</p>
           <h3 className="mt-1 font-display text-2xl font-medium text-white">{project.name}</h3>
           <p className="mt-3 text-base leading-relaxed text-white">{project.summary}</p>
@@ -53,8 +56,9 @@ function WorkSlide({ project, index, total }: { project: Project; index: number;
 
 /**
  * The portfolio carousel from v1, rebuilt: a large coloured panel, three project cards per page that
- * overhang it, and dots. It is a native scroll-snap track, so it can be swiped, scrolled and tabbed through;
- * it also advances by itself, pausing on hover, focus and touch, and never auto-advances for reduced motion.
+ * overhang it, and dots (no arrow buttons). It is a native scroll-snap track, so it can be swiped, scrolled and tabbed through;
+ * it also advances by itself every few seconds (mouse hover does not stop it), holds for a while after a touch, click or
+ * key press and while a keyboard user is focused inside it, and never auto-advances for reduced motion.
  */
 export function WorkCarousel({ projects }: { projects: readonly Project[] }) {
   const root = useRef<HTMLDivElement>(null)
@@ -84,7 +88,8 @@ export function WorkCarousel({ projects }: { projects: readonly Project[] }) {
     const wrapper = root.current
     if (!element || !wrapper) return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    let paused = false
+    let holdUntil = 0
+    let keyboardFocus = false
     let visible = false
     let frame = 0
 
@@ -92,11 +97,16 @@ export function WorkCarousel({ projects }: { projects: readonly Project[] }) {
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => measure(element))
     }
-    const pause = () => {
-      paused = true
+    // A touch, click or key press holds the autoplay briefly. Hovering does not, and a clicked dot that keeps focus
+    // must not freeze it for good, so only keyboard focus (:focus-visible) pauses it for as long as it stays there.
+    const hold = () => {
+      holdUntil = performance.now() + HOLD_MS
     }
-    const resume = () => {
-      paused = false
+    const onFocusIn = (event: FocusEvent) => {
+      if (event.target instanceof HTMLElement && event.target.matches(':focus-visible')) keyboardFocus = true
+    }
+    const onFocusOut = () => {
+      keyboardFocus = false
     }
 
     const resize = new ResizeObserver(() => measure(element))
@@ -106,13 +116,14 @@ export function WorkCarousel({ projects }: { projects: readonly Project[] }) {
     resize.observe(element)
     intersect.observe(wrapper)
     element.addEventListener('scroll', onScroll, { passive: true })
-    for (const name of ['pointerenter', 'focusin', 'touchstart'] as const) wrapper.addEventListener(name, pause, { passive: true })
-    for (const name of ['pointerleave', 'focusout', 'touchend'] as const) wrapper.addEventListener(name, resume, { passive: true })
+    for (const name of ['pointerdown', 'touchstart', 'keydown'] as const) wrapper.addEventListener(name, hold, { passive: true })
+    wrapper.addEventListener('focusin', onFocusIn)
+    wrapper.addEventListener('focusout', onFocusOut)
 
     const timer = reduced
       ? undefined
       : window.setInterval(() => {
-          if (paused || !visible || document.hidden) return
+          if (keyboardFocus || performance.now() < holdUntil || !visible || document.hidden) return
           const width = element.clientWidth
           const count = Math.max(1, Math.ceil(element.scrollWidth / width - 0.05))
           const next = (Math.round(element.scrollLeft / width) + 1) % count
@@ -125,8 +136,9 @@ export function WorkCarousel({ projects }: { projects: readonly Project[] }) {
       resize.disconnect()
       intersect.disconnect()
       element.removeEventListener('scroll', onScroll)
-      for (const name of ['pointerenter', 'focusin', 'touchstart'] as const) wrapper.removeEventListener(name, pause)
-      for (const name of ['pointerleave', 'focusout', 'touchend'] as const) wrapper.removeEventListener(name, resume)
+      for (const name of ['pointerdown', 'touchstart', 'keydown'] as const) wrapper.removeEventListener(name, hold)
+      wrapper.removeEventListener('focusin', onFocusIn)
+      wrapper.removeEventListener('focusout', onFocusOut)
     }
   }, [])
 
@@ -148,40 +160,22 @@ export function WorkCarousel({ projects }: { projects: readonly Project[] }) {
           ))}
         </div>
 
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <button
-            type="button"
-            aria-label="Previous projects"
-            onClick={() => goTo(page - 1)}
-            className="inline-flex size-11 items-center justify-center rounded-lg border border-white/60 text-white transition-colors hover:bg-white hover:text-navy-950"
-          >
-            <HugeIcon icon={ArrowLeft01Icon} size={20} />
-          </button>
-          <div className="flex items-center">
-            {Array.from({ length: pages }, (_, index) => (
-              <button
-                key={index}
-                type="button"
-                aria-label={`Show page ${index + 1} of ${pages}`}
-                aria-current={index === page}
-                onClick={() => goTo(index)}
-                className="flex h-6 min-w-6 items-center justify-center px-1"
-              >
-                <span
-                  aria-hidden="true"
-                  className={cn('block h-2 rounded-full transition-all duration-300', index === page ? 'w-10 bg-white' : 'w-2 bg-white/50')}
-                />
-              </button>
-            ))}
-          </div>
-          <button
-            type="button"
-            aria-label="Next projects"
-            onClick={() => goTo(page + 1)}
-            className="inline-flex size-11 items-center justify-center rounded-lg border border-white/60 text-white transition-colors hover:bg-white hover:text-navy-950"
-          >
-            <HugeIcon icon={ArrowRight01Icon} size={20} />
-          </button>
+        <div className="mt-8 flex items-center justify-center">
+          {Array.from({ length: pages }, (_, index) => (
+            <button
+              key={index}
+              type="button"
+              aria-label={`Show page ${index + 1} of ${pages}`}
+              aria-current={index === page}
+              onClick={() => goTo(index)}
+              className="flex h-6 min-w-6 items-center justify-center px-1"
+            >
+              <span
+                aria-hidden="true"
+                className={cn('block h-2 rounded-full transition-all duration-300', index === page ? 'w-10 bg-white' : 'w-2 bg-white/50')}
+              />
+            </button>
+          ))}
         </div>
       </div>
     </div>

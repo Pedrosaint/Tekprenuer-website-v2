@@ -20,7 +20,7 @@ export function BackToTop() {
           initial={{ opacity: 0, scale: 0.8, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 12 }}
-          className="fixed right-5 bottom-24 z-40 inline-flex size-12 items-center justify-center rounded-lg border border-white/20 bg-navy-950 text-white transition hover:bg-royal-700 sm:right-6"
+          className="fixed right-5 bottom-24 z-40 inline-flex size-12 items-center justify-center rounded-xl border border-white/20 bg-navy-950 text-white transition hover:bg-royal-700 sm:right-6"
         >
           <HugeIcon icon={ArrowUp01Icon} size={20} />
         </m.button>

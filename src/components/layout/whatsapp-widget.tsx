@@ -73,7 +73,7 @@ export function WhatsAppWidget() {
                   setOpen(false)
                   launcher.current?.focus()
                 }}
-                className="inline-flex size-10 items-center justify-center rounded-lg text-white/90 transition hover:bg-white/10"
+                className="inline-flex size-10 items-center justify-center rounded-xl text-white/90 transition hover:bg-white/10"
               >
                 <HugeIcon icon={Cancel01Icon} size={20} />
               </button>
@@ -98,13 +98,13 @@ export function WhatsAppWidget() {
                 onChange={(event) => setMessage(event.target.value)}
                 placeholder="Type a message…"
                 autoComplete="off"
-                className="min-h-11 flex-1 rounded-lg border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-offset-2 placeholder:text-slate-500"
+                className="min-h-11 flex-1 rounded-xl border border-slate-300 bg-white px-4 text-sm text-slate-900 outline-offset-2 placeholder:text-slate-500"
               />
               <button
                 type="submit"
                 disabled={!message.trim()}
                 aria-label="Send on WhatsApp"
-                className="inline-flex size-11 items-center justify-center rounded-lg bg-[#075e54] text-white transition enabled:hover:bg-[#0b7a6d] disabled:opacity-40"
+                className="inline-flex size-11 items-center justify-center rounded-xl bg-[#075e54] text-white transition enabled:hover:bg-[#0b7a6d] disabled:opacity-40"
               >
                 <HugeIcon icon={SentIcon} size={18} />
               </button>
@@ -119,7 +119,7 @@ export function WhatsAppWidget() {
         onClick={toggle}
         aria-label={open ? 'Close WhatsApp chat' : 'Chat with us on WhatsApp'}
         aria-expanded={open}
-        className="inline-flex size-14 pulse-ring items-center justify-center rounded-lg bg-[#1da851] text-white transition hover:scale-105"
+        className="inline-flex size-14 pulse-ring items-center justify-center rounded-xl bg-[#1da851] text-white transition hover:scale-105"
       >
         <HugeIcon icon={WhatsappIcon} size={30} />
       </button>

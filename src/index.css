@@ -85,6 +85,7 @@
   --color-cta: var(--cta);
   --color-cta-hover: var(--cta-hover);
   --color-cta-ink: var(--cta-ink);
+  --color-cta-sweep: var(--cta-sweep);
   --color-accent-ink: var(--accent-ink);
   --color-ring: var(--ring);
 }
@@ -109,8 +110,9 @@
   --ink-muted: #475569;
   --line: #dde3ee;
   --brand: #021e9c;
-  --cta: #021e9c;
+  --cta: #010a36;
   --cta-hover: #1237c4;
+  --cta-sweep: #021e9c;
   --cta-ink: #ffffff;
   --accent-ink: #c2410c;
   --ring: #2f5ae0;
@@ -127,6 +129,7 @@
   --brand: #8fb0ff;
   --cta: #fb923c;
   --cta-hover: #fdba74;
+  --cta-sweep: #f1f5f9;
   --cta-ink: #010a36;
   --accent-ink: #fb923c;
   --ring: #fdba74;
@@ -145,6 +148,7 @@
     --brand: #8fb0ff;
     --cta: #fb923c;
     --cta-hover: #fdba74;
+    --cta-sweep: #f8fafc;
     --cta-ink: #010a36;
     --accent-ink: #fb923c;
     --ring: #fdba74;

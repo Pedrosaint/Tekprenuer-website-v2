@@ -142,7 +142,7 @@ export function Component() {
               <li key={other.slug}>
                 <Link
                   to={`/services/${other.slug}`}
-                  className="inline-flex min-h-11 items-center rounded-lg border border-line bg-raised px-5 text-base font-medium text-ink transition hover:border-orange-400"
+                  className="inline-flex min-h-11 items-center rounded-xl border border-line bg-raised px-5 text-base font-medium text-ink transition hover:border-orange-400"
                 >
                   {other.title}
                 </Link>

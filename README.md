@@ -46,8 +46,9 @@ scripts/                      image optimiser, icon generator, static preview se
 ```
 
 ### Design language
-- **Flat**: no shadows, no gradients (borders and solid colour only). **Buttons** are `rounded-lg` rectangles with a sweep-fill hover
-  and an arrow chip (`src/components/ui/button.tsx`). Nothing interactive is a full pill.
+- **Flat**: no shadows, no gradients (borders and solid colour only). **Buttons** are `rounded-xl` rectangles with a sweep-fill hover
+  and an arrow chip (`src/components/ui/button.tsx`). Nothing interactive is a full pill. The primary button is brand navy on
+  light surfaces (sweeping to royal blue on hover) and orange on navy bands (`--cta` / `--cta-sweep` tokens).
 - **Type**: Ubuntu (medium weight) for headings, **Outfit** for everything else, both self-hosted via Fontsource. Calm by design:
   no all-caps labels, no heavy weights, soft tinted icon tiles instead of saturated blocks.
 - **Icons**: [Hugeicons](https://hugeicons.com) only (`@hugeicons/react` + `@hugeicons/core-free-icons`), rendered through `<HugeIcon/>` /
@@ -62,10 +63,14 @@ scripts/                      image optimiser, icon generator, static preview se
 
 ### How "dynamic" is built (and how it stays fast)
 - **Live 3D**: a procedural WebGL city in the hero and an orbit scene in the CTA band. The hero scene starts by itself about
-  2 seconds after the page has loaded (no interaction needed) and cross-fades over the prerendered hero picture; the CTA scene
-  loads only once you scroll near it. Scenes are skipped on software-rendered WebGL, with `prefers-reduced-motion` or Data Saver,
-  and pause when off-screen; the picture / a CSS-3D ring stays in that case. Append `?3d=force` or `?3d=off` to any URL to override.
-- **CSS-3D**: pointer-tilt cards, a rotating technology ring and parallax tiles (no JavaScript animation loop).
+  2 seconds after the page has loaded (no interaction needed) and fades in. There is deliberately **no static picture** standing in
+  for it: the hero keeps its space empty until the city has drawn, and when 3D can never run (software-rendered WebGL,
+  `prefers-reduced-motion`, Data Saver) the empty column collapses and the text takes the full width. The CTA scene loads only
+  once you scroll near it (a flat CSS ring stays if 3D is unavailable). Scenes pause when off-screen. Append `?3d=force` or
+  `?3d=off` to any URL to override.
+- **Light interaction**: pointer-tilt cards and parallax tiles are CSS-driven; the technology orbit and the portfolio carousel
+  each run a single loop/timer, only while on screen. The carousel advances every 5 s, ignores mouse hover, holds for 8 s after
+  a touch, click or key press, and never autoplays for reduced motion.
 - **Prerender + hydrate**: every route ships as real HTML, so content paints before JavaScript and crawlers see the page.
   The app bundle starts after the first contentful paint, and below-the-fold sections hydrate in their own time slices.
 

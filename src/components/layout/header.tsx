@@ -57,9 +57,10 @@ export function Header() {
             variant="accent"
             size="sm"
             icon={<HugeIcon icon={Calendar03Icon} size={20} />}
-            className="size-11 !min-h-11 !px-0 xl:hidden"
+            iconOnly
+            className="size-11 min-h-11! px-0! xl:hidden"
           >
-            <span className="sr-only">Book a free consultation</span>
+            Book a free consultation
           </Button>
           <button
             ref={menuButton}
@@ -68,7 +69,7 @@ export function Header() {
             aria-label="Open menu"
             aria-expanded={open}
             aria-haspopup="dialog"
-            className="inline-flex size-11 items-center justify-center rounded-lg text-white transition-colors hover:bg-white/10 xl:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 xl:hidden"
           >
             <HugeIcon icon={Menu01Icon} size={24} />
           </button>

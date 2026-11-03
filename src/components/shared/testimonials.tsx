@@ -64,7 +64,7 @@ export function Testimonials() {
               type="button"
               aria-label="Previous testimonial"
               onClick={() => step(-1)}
-              className="inline-flex size-11 items-center justify-center rounded-lg border border-line text-ink transition-colors hover:bg-raised"
+              className="inline-flex size-11 items-center justify-center rounded-xl border border-line text-ink transition-colors hover:bg-raised"
             >
               <HugeIcon icon={ArrowLeft01Icon} size={20} />
             </button>
@@ -86,7 +86,7 @@ export function Testimonials() {
               type="button"
               aria-label="Next testimonial"
               onClick={() => step(1)}
-              className="inline-flex size-11 items-center justify-center rounded-lg border border-line text-ink transition-colors hover:bg-raised"
+              className="inline-flex size-11 items-center justify-center rounded-xl border border-line text-ink transition-colors hover:bg-raised"
             >
               <HugeIcon icon={ArrowRight01Icon} size={20} />
             </button>

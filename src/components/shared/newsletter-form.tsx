@@ -44,7 +44,7 @@ function NewsletterFormInner({ endpoint }: { endpoint: string }) {
           placeholder="you@company.com"
           aria-invalid={status === 'error'}
           aria-describedby={`${id}-status`}
-          className="min-h-12 flex-1 rounded-lg border border-line bg-raised px-5 text-ink placeholder:text-ink-muted"
+          className="min-h-12 flex-1 rounded-xl border border-line bg-raised px-5 text-ink placeholder:text-ink-muted"
         />
         <Button type="submit" size="md" disabled={status === 'sending'}>
           {status === 'sending' ? 'Subscribing…' : 'Subscribe'}

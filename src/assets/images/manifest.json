@@ -1,0 +1,246 @@
+{
+  "logo": {
+    "width": 1122,
+    "height": 246,
+    "widths": [
+      320,
+      640
+    ]
+  },
+  "logo-white": {
+    "width": 162,
+    "height": 33,
+    "widths": [
+      162
+    ]
+  },
+  "ecolex": {
+    "width": 78,
+    "height": 45,
+    "widths": [
+      78
+    ]
+  },
+  "headerfy": {
+    "width": 164,
+    "height": 49,
+    "widths": [
+      164
+    ]
+  },
+  "weestore": {
+    "width": 500,
+    "height": 117,
+    "widths": [
+      500
+    ]
+  },
+  "launchconnect": {
+    "width": 395,
+    "height": 141,
+    "widths": [
+      395
+    ]
+  },
+  "perch": {
+    "width": 33,
+    "height": 44,
+    "widths": [
+      33
+    ]
+  },
+  "nuvile": {
+    "width": 530,
+    "height": 393,
+    "widths": [
+      530
+    ]
+  },
+  "softtouch": {
+    "width": 648,
+    "height": 526,
+    "widths": [
+      320
+    ]
+  },
+  "hero-about": {
+    "width": 1920,
+    "height": 1260,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-services": {
+    "width": 1920,
+    "height": 2400,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-work": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-process": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-pricing": {
+    "width": 1920,
+    "height": 1281,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-insights": {
+    "width": 1920,
+    "height": 1281,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-faq": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-contact": {
+    "width": 1920,
+    "height": 1275,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-legal": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-case": {
+    "width": 1920,
+    "height": 1368,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-svc-ai": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-svc-web": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-svc-uiux": {
+    "width": 1920,
+    "height": 2400,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-svc-software": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-svc-branding": {
+    "width": 1920,
+    "height": 2400,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-svc-pm": {
+    "width": 1920,
+    "height": 1440,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-svc-ecommerce": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "hero-svc-marketing": {
+    "width": 1920,
+    "height": 1440,
+    "widths": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "about-story": {
+    "width": 1920,
+    "height": 1280,
+    "widths": [
+      640,
+      1024
+    ]
+  },
+  "accessum": {
+    "width": 422,
+    "height": 96,
+    "widths": []
+  },
+  "getelectric": {
+    "width": 153,
+    "height": 28,
+    "widths": []
+  }
+}

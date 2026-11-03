@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#010a36" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Title, description, canonical, Open Graph, Twitter and JSON-LD are generated per route by plugins/seo-plugin.ts -->
+    <!--seo-head-->
+
+    <!-- Apply the saved (or system) theme before first paint to avoid a flash. -->
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('tek-theme');
+          if (theme !== 'light' && theme !== 'dark') {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Google tag (Google Ads AW-18076900674). The library is only fetched AFTER the visitor accepts cookies. -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+      gtag('js', new Date());
+      gtag('config', 'AW-18076900674');
+
+      window.tekLoadAnalytics = function () {
+        if (window.tekAnalyticsLoaded) return;
+        window.tekAnalyticsLoaded = true;
+        gtag('consent', 'update', {
+          ad_storage: 'granted',
+          analytics_storage: 'granted',
+          ad_user_data: 'granted',
+          ad_personalization: 'granted'
+        });
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18076900674';
+        document.head.appendChild(s);
+      };
+
+      try {
+        if (localStorage.getItem('tek-consent') === 'granted') window.tekLoadAnalytics();
+      } catch (e) {}
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding: 2rem; font-family: sans-serif">
+        Tekprenuers builds websites, apps and software for startups and entrepreneurs. Please enable JavaScript to view
+        this site, or email tekprenuers@gmail.com.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

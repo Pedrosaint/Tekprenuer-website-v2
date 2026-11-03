@@ -1,0 +1,284 @@
+@import "tailwindcss";
+@import "@fontsource-variable/outfit";
+@import "@fontsource/ubuntu/latin-500.css";
+@import "@fontsource/ubuntu/latin-700.css";
+
+/* Dark mode is driven by <html data-theme="dark">, set before first paint (see index.html). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ------------------------------------------------------------------ *
+ * Design tokens
+ * Spacing follows Tailwind's 4px unit; the layout rhythm is 8px, so we
+ * use even steps (2, 4, 6, 8, 12, 16, 20, 24...).
+ * ------------------------------------------------------------------ */
+@theme {
+  --font-sans: "Outfit Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Ubuntu", "Outfit Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand: deep navy (#010A36 = 950) */
+  --color-navy-50: #f1f4fc;
+  --color-navy-100: #e2e8f8;
+  --color-navy-200: #c5d0f0;
+  --color-navy-300: #98aae3;
+  --color-navy-400: #6a82d3;
+  --color-navy-500: #4560bd;
+  --color-navy-600: #2f469c;
+  --color-navy-700: #1f3278;
+  --color-navy-800: #0f1e5a;
+  --color-navy-900: #061245;
+  --color-navy-950: #010a36;
+
+  /* Brand: royal blue (#021E9C = 700) */
+  --color-royal-50: #eef3ff;
+  --color-royal-100: #dce7ff;
+  --color-royal-200: #bcd0ff;
+  --color-royal-300: #8fb0ff;
+  --color-royal-400: #5a85f5;
+  --color-royal-500: #2f5ae0;
+  --color-royal-600: #1237c4;
+  --color-royal-700: #021e9c;
+  --color-royal-800: #051a7a;
+  --color-royal-900: #0a1a5c;
+
+  /* Warm panel behind the portfolio carousel (kept from v1) */
+  --color-rust: #8a3a2c;
+
+  /* Radii */
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-panel: 1rem;
+
+  /* Fluid type scale */
+  --text-display: clamp(2.25rem, 1.5rem + 3vw, 3.75rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.02em;
+  --text-h1: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h2: clamp(1.625rem, 1.3rem + 1.3vw, 2.25rem);
+  --text-h2--line-height: 1.18;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h3: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --text-h3--line-height: 1.3;
+  --text-lead: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  --text-lead--line-height: 1.65;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-float: float 7s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -12px, 0); }
+  }
+}
+
+@theme inline {
+  /* Semantic colours (values swap per theme / section tone, see :root below) */
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
+  --color-cta-ink: var(--cta-ink);
+  --color-accent-ink: var(--accent-ink);
+  --color-ring: var(--ring);
+}
+
+/* One container for the whole site: centred, with a responsive gutter. Tailwind supplies its width steps. */
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 40rem) { padding-inline: 1.5rem; }
+  @media (width >= 64rem) { padding-inline: 2rem; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Semantic tokens. Section tone="dark" re-declares these locally, so any
+ * component built from bg-surface / text-ink / border-line adapts.
+ * ------------------------------------------------------------------ */
+:root {
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --raised: #ffffff;
+  --ink: #0b1230;
+  --ink-muted: #475569;
+  --line: #dde3ee;
+  --brand: #021e9c;
+  --cta: #021e9c;
+  --cta-hover: #1237c4;
+  --cta-ink: #ffffff;
+  --accent-ink: #c2410c;
+  --ring: #2f5ae0;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --surface: #050c2b;
+  --surface-alt: #0a1442;
+  --raised: #0f1b57;
+  --ink: #f1f5f9;
+  --ink-muted: #b4c0dc;
+  --line: rgb(148 163 184 / 0.2);
+  --brand: #8fb0ff;
+  --cta: #fb923c;
+  --cta-hover: #fdba74;
+  --cta-ink: #010a36;
+  --accent-ink: #fb923c;
+  --ring: #fdba74;
+  color-scheme: dark;
+}
+
+@layer components {
+  /* Always-navy bands (hero, CTA, process strip) in both themes. */
+  .tone-dark {
+    --surface: #010a36;
+    --surface-alt: #061245;
+    --raised: rgb(255 255 255 / 0.06);
+    --ink: #f8fafc;
+    --ink-muted: #c4cde3;
+    --line: rgb(255 255 255 / 0.16);
+    --brand: #8fb0ff;
+    --cta: #fb923c;
+    --cta-hover: #fdba74;
+    --cta-ink: #010a36;
+    --accent-ink: #fb923c;
+    --ring: #fdba74;
+    color-scheme: dark;
+    background-color: var(--surface);
+    color: var(--ink);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Base
+ * ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--surface);
+    color: var(--ink);
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: #fb923c;
+    color: #010a36;
+  }
+
+  img, svg, video, canvas { display: block; max-width: 100%; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+
+  /* Placeholder shown by <Picture> until the image has loaded. Static on purpose: animating background
+     properties repaints every frame and cannot run on the compositor. */
+  .skeleton {
+    background-color: var(--line);
+  }
+}
+
+/* Reveal-on-scroll (see components/ui/reveal.tsx). A gentle lift only: text never changes opacity, so it is always
+   at full contrast. Visible unless JS has marked the element as pending. */
+[data-reveal][data-pending] {
+  transform: translate3d(0, var(--reveal-y, 16px), 0);
+  transition: transform 0.6s var(--ease-out-expo) var(--reveal-delay, 0s);
+}
+[data-reveal][data-pending][data-revealed] {
+  transform: none;
+}
+
+/* Pointer-follow 3D tilt (see components/ui/tilt-card.tsx). */
+.tilt {
+  transform-style: preserve-3d;
+}
+.tilt[data-tilting] {
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  will-change: transform;
+  transition: transform 0.12s ease-out;
+}
+.tilt:not([data-tilting]) {
+  transition: transform 0.45s var(--ease-out-expo);
+}
+/* Magnetic CTA (see components/ui/magnetic.tsx). */
+.magnetic {
+  transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+  transition: transform 0.25s var(--ease-out-expo);
+}
+
+/* WhatsApp launcher pulse: scales and fades a pseudo-element, which stays on the compositor. */
+.pulse-ring {
+  position: relative;
+  isolation: isolate;
+}
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgb(37 211 102 / 0.55);
+  animation: ping-ring 2.4s ease-out infinite;
+  z-index: -1;
+}
+@keyframes ping-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  70%, 100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* Skip rendering work for sections far below the fold (see <Section>). */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  [data-reveal][data-pending] { transform: none; transition: none; }
+  .tilt[data-tilting] { transform: none; }
+  .magnetic { transform: none; }
+  .pulse-ring::after { display: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes ring-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+@keyframes ring-tumble {
+  from { transform: rotateX(var(--tilt)) rotateZ(0deg); }
+  to { transform: rotateX(var(--tilt)) rotateZ(360deg); }
+}

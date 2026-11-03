@@ -8,6 +8,7 @@ import { Heading } from '../../components/ui/heading'
 import { Magnetic } from '../../components/ui/magnetic'
 import { Section } from '../../components/ui/section'
 import { bookingTarget } from '../../lib/contact'
+import { CityPlaceholder } from './city-placeholder'
 import { PillarCards } from './pillars-section'
 
 /**
@@ -55,8 +56,8 @@ export function HeroSection() {
           </p>
         </div>
 
-        {/* No static stand-in: this space is held empty (so nothing jumps) until the live 3D city has drawn. */}
-        <SceneHost variant="city" className="relative aspect-5/4 w-full data-[scene=off]:hidden" />
+        {/* No picture: a flat placeholder holds this space (so nothing jumps) until the live 3D city has drawn. */}
+        <SceneHost variant="city" className="relative w-full data-[scene=off]:hidden" fallback={<CityPlaceholder />} />
       </div>
 
       <PillarCards />

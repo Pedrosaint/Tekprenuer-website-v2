@@ -257,6 +257,15 @@
   70%, 100% { transform: scale(1.55); opacity: 0; }
 }
 
+/* Quiet "waiting" pulse for placeholders (opacity only, so it stays on the compositor). */
+.placeholder-pulse {
+  animation: placeholder-pulse 2.4s ease-in-out infinite;
+}
+@keyframes placeholder-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
 /* Skip rendering work for sections far below the fold (see <Section>). */
 .defer-render {
   content-visibility: auto;

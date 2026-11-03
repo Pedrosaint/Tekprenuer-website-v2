@@ -63,9 +63,10 @@ scripts/                      image optimiser, icon generator, static preview se
 
 ### How "dynamic" is built (and how it stays fast)
 - **Live 3D**: a procedural WebGL city in the hero and an orbit scene in the CTA band. The hero scene starts by itself about
-  2 seconds after the page has loaded (no interaction needed) and fades in. There is deliberately **no static picture** standing in
-  for it: the hero keeps its space empty until the city has drawn, and when 3D can never run (software-rendered WebGL,
-  `prefers-reduced-motion`, Data Saver) the empty column collapses and the text takes the full width. The CTA scene loads only
+  2 seconds after the page has loaded (no interaction needed) and fades in. There is deliberately **no picture** standing in
+  for it: until the city has drawn, a flat inline-SVG skyline placeholder (`city-placeholder.tsx`, pulsing quietly) holds the
+  space, then fades out. When 3D can never run (software-rendered WebGL, `prefers-reduced-motion`, Data Saver) the whole
+  column, placeholder included, collapses and the text takes the full width. The CTA scene loads only
   once you scroll near it (a flat CSS ring stays if 3D is unavailable). Scenes pause when off-screen. Append `?3d=force` or
   `?3d=off` to any URL to override.
 - **Light interaction**: pointer-tilt cards and parallax tiles are CSS-driven; the technology orbit and the portfolio carousel

@@ -22,16 +22,16 @@ export function CookieBanner() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 32 }}
           transition={{ type: 'spring', stiffness: 260, damping: 28 }}
-          className="tone-dark fixed inset-x-3 bottom-3 z-[90] rounded-xl border border-white/15 p-5 sm:inset-x-auto sm:bottom-5 sm:left-5 sm:w-[26rem]"
+          className="tone-band fixed inset-x-3 bottom-3 z-[90] rounded-xl border border-line p-5 sm:inset-x-auto sm:bottom-5 sm:left-5 sm:w-[26rem]"
         >
           <div className="flex items-start gap-3">
-            <HugeIcon icon={CookieIcon} size={22} className="mt-0.5 shrink-0 text-orange-400" />
+            <HugeIcon icon={CookieIcon} size={22} className="mt-0.5 shrink-0 text-accent-ink" />
             <div className="flex flex-col gap-1">
-              <h2 className="font-sans text-base font-medium text-white">Cookies on Tekprenuers</h2>
+              <h2 className="font-sans text-base font-medium text-ink">Cookies on Tekprenuers</h2>
               <p className="text-sm leading-relaxed text-ink-muted">
                 We use analytics and advertising cookies only if you accept. Essential storage (your theme and this choice) is
                 always on. See our{' '}
-                <Link to="/cookies" className="font-medium text-white underline underline-offset-4">
+                <Link to="/cookies" className="font-medium text-ink underline underline-offset-4">
                   Cookie Policy
                 </Link>
                 .
@@ -39,7 +39,7 @@ export function CookieBanner() {
             </div>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3">
-            <Button variant="glass" size="sm" onClick={decline}>
+            <Button variant="secondary" size="sm" onClick={decline}>
               Decline
             </Button>
             <Button variant="accent" size="sm" onClick={accept}>

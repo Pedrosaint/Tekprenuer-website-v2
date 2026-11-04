@@ -11,10 +11,10 @@ export function RouteError() {
   const notFound = isRouteErrorResponse(error) && error.status === 404
 
   return (
-    <Section tone="dark" eager className="flex min-h-screen items-center" aria-labelledby="route-error-title">
+    <Section tone="band" eager className="flex min-h-screen items-center" aria-labelledby="route-error-title">
       <div className="flex w-full flex-col items-start gap-6 lg:w-1/2">
         <Logo />
-        <Heading id="route-error-title" level={1} size="h1" className="text-white">
+        <Heading id="route-error-title" level={1} size="h1" className="text-ink">
           {notFound ? 'Page not found' : 'Something went wrong'}
         </Heading>
         <p className="text-lead text-ink-muted">
@@ -24,7 +24,7 @@ export function RouteError() {
         </p>
         <div className="flex flex-wrap gap-3">
           <Button onClick={() => window.location.reload()}>Reload the page</Button>
-          <Button href="/" variant="glass">
+          <Button href="/" variant="secondary">
             Go to the home page
           </Button>
         </div>

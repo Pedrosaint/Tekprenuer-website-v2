@@ -47,7 +47,7 @@ export function Component() {
       />
 
       <Suspense fallback={null}>
-      <Section tone="light" aria-label="Contact options and project brief">
+      <Section tone="light" eager aria-label="Contact options and project brief">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:gap-14">
           <Reveal className="flex flex-col gap-5">
             <InfoCard icon="support" title="Customer Support">
@@ -94,7 +94,7 @@ export function Component() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <Card padding="lg" className="flex flex-col gap-6">
+            <Card id="brief" padding="lg" className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <Heading level={2} size="h2">
                   Send us a project brief

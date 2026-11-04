@@ -22,24 +22,24 @@ interface PageHeroProps {
   aside?: ReactNode
 }
 
-/** A monochrome photo under a solid navy layer: every page gets its own header image, no gradients. */
+/** A monochrome photo under a solid layer of the band colour (pale in light mode, navy in dark mode): every page gets its own header image, no gradients. */
 function HeroPhoto({ name }: { name: string }) {
   return (
     <div aria-hidden="true" className="absolute inset-0 -z-10">
       <Picture name={name} alt="" priority sizes="100vw" className="absolute inset-0 size-full object-cover" />
-      <div className="absolute inset-0 bg-navy-950/70" />
+      <div className="absolute inset-0 bg-surface/90 dark:bg-surface/70" />
     </div>
   )
 }
 
-/** Navy hero band used at the top of every inner page. Renders the page's single h1. */
+/** Hero band used at the top of every inner page. Renders the page's single h1. */
 export function PageHero({ eyebrow, title, lead, crumbs, actions, aside }: PageHeroProps) {
   const { pathname } = useLocation()
   const image = heroImageFor(pathname)
 
   return (
     <Section
-      tone="dark"
+      tone="band"
       spacing="md"
       eager
       className="pt-14 pb-16 sm:pt-20 sm:pb-24"
@@ -54,11 +54,11 @@ export function PageHero({ eyebrow, title, lead, crumbs, actions, aside }: PageH
                   <li key={crumb.label} className="flex items-center gap-2">
                     {index > 0 && <span aria-hidden="true">/</span>}
                     {crumb.to ? (
-                      <Link to={crumb.to} className="transition-colors hover:text-white">
+                      <Link to={crumb.to} className="transition-colors hover:text-ink">
                         {crumb.label}
                       </Link>
                     ) : (
-                      <span aria-current="page" className="text-white">
+                      <span aria-current="page" className="text-ink">
                         {crumb.label}
                       </span>
                     )}
@@ -68,11 +68,11 @@ export function PageHero({ eyebrow, title, lead, crumbs, actions, aside }: PageH
             </nav>
           )}
           {eyebrow && (
-            <Badge tone="glass" className="self-start">
+            <Badge tone="soft" className="self-start">
               {eyebrow}
             </Badge>
           )}
-          <Heading level={1} size="h1" className="text-white">
+          <Heading level={1} size="h1" className="text-ink">
             {title}
           </Heading>
           {lead && <p className="text-lead text-ink-muted">{lead}</p>}

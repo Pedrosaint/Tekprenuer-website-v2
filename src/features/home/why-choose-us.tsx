@@ -36,20 +36,20 @@ export function WhyChooseUs() {
       </ul>
 
       <Reveal className="mt-8">
-        <div className="tone-dark relative overflow-hidden rounded-xl p-8 sm:p-12">
+        <div className="tone-band relative overflow-hidden rounded-xl p-8 sm:p-12">
           <div className="relative grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
             <div className="flex flex-col gap-4">
-              <Heading level={3} size="h2" className="text-white">
+              <Heading level={3} size="h2" className="text-ink">
                 {supportPromise.title}
               </Heading>
               <p className="text-lead text-ink-muted lg:w-4/5">{supportPromise.text}</p>
-              <p className="font-medium text-white lg:w-4/5">{site.support.policy}</p>
+              <p className="font-medium text-ink lg:w-4/5">{site.support.policy}</p>
             </div>
             <div className="flex flex-col gap-3 lg:items-end">
               <Button href={`tel:${site.contact.phone}`} size="lg" icon={<HugeIcon icon={Call02Icon} size={20} />}>
                 Call {site.contact.phoneDisplay}
               </Button>
-              <Button to="/faq" variant="glass">
+              <Button to="/faq" variant="secondary">
                 Browse common questions
               </Button>
             </div>

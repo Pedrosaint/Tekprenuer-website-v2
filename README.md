@@ -58,8 +58,8 @@ scripts/                      image optimiser, icon generator, static preview se
   `pageHeroImages` / `Service.heroImage`). Photo sources are listed in `assets-src/photos/CREDITS.md`. Icons are the
   trimmed 3D renders, shown large.
 - **Tokens** live in [`src/index.css`](src/index.css) with Tailwind 4 `@theme` (brand ramps `navy-*` / `royal-*`, radii, fluid type
-  scale) and semantic colours (`surface`, `ink`, `line`, `cta`, …). Those are CSS variables, so dark mode and the always-navy
-  bands (`<Section tone="dark">`) are a variable swap, not duplicated styles.
+  scale) and semantic colours (`surface`, `ink`, `line`, `cta`, …). Those are CSS variables, so dark mode and the banded
+  sections (`<Section tone="band">`: pale tint in light mode, navy in dark mode) are a variable swap, not duplicated styles.
 
 ### How "dynamic" is built (and how it stays fast)
 - **Live 3D**: a procedural WebGL city in the hero and an orbit scene in the CTA band. The hero scene starts by itself about
@@ -68,7 +68,9 @@ scripts/                      image optimiser, icon generator, static preview se
   space, then fades out. When 3D can never run (software-rendered WebGL, `prefers-reduced-motion`, Data Saver) the whole
   column, placeholder included, collapses and the text takes the full width. The CTA scene loads only
   once you scroll near it (a flat CSS ring stays if 3D is unavailable). Scenes pause when off-screen. Append `?3d=force` or
-  `?3d=off` to any URL to override.
+  `?3d=off` to any URL to override. Starting the city never freezes the page: it uses no environment/reflection map (building one
+  compiled a shader that blocked the main thread for ~0.8 s on Windows; the metal look comes from the scene's lights instead) and
+  compiles its remaining shaders in parallel with `renderer.compileAsync` before the first frame.
 - **Light interaction**: pointer-tilt cards and parallax tiles are CSS-driven; the technology orbit and the portfolio carousel
   each run a single loop/timer, only while on screen. The carousel advances every 5 s, ignores mouse hover, holds for 8 s after
   a touch, click or key press, and never autoplays for reduced motion.

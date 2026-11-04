@@ -3,9 +3,9 @@ import type { CSSProperties } from 'react'
 type RingStyle = CSSProperties & { '--tilt': string }
 
 const rings: { size: string; tilt: string; duration: string; color: string }[] = [
-  { size: '58%', tilt: '72deg', duration: '20s', color: 'border-royal-300/60' },
+  { size: '58%', tilt: '72deg', duration: '20s', color: 'border-brand/50' },
   { size: '78%', tilt: '56deg', duration: '28s', color: 'border-orange-400/70' },
-  { size: '96%', tilt: '82deg', duration: '38s', color: 'border-white/25' },
+  { size: '96%', tilt: '82deg', duration: '38s', color: 'border-ink/25' },
 ]
 
 /**

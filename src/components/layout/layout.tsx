@@ -12,7 +12,9 @@ import { WhatsAppWidget } from './whatsapp-widget'
 
 /** Site shell: landmarks, skip link, route transitions, focus and scroll management. */
 export function Layout() {
-  const { pathname, hash } = useLocation()
+  const { pathname, hash, key } = useLocation()
+  // A repeat navigation to the same #target gets a new location key, so it scrolls again.
+  const hashKey = hash ? key : ''
   const main = useRef<HTMLElement>(null)
   const announcer = useRef<HTMLDivElement>(null)
   const firstRender = useRef(true)
@@ -32,7 +34,7 @@ export function Layout() {
       if (announcer.current) announcer.current.textContent = document.title
     }, 150)
     return () => window.clearTimeout(timer)
-  }, [pathname, hash])
+  }, [pathname, hash, hashKey])
 
   return (
     <>

@@ -11,7 +11,7 @@ import { Logo } from './logo'
 import { MobileDrawer } from './mobile-drawer'
 import { ThemeToggle } from './theme-toggle'
 
-/** Sticky, always-navy header with route highlighting and a persistent booking CTA. */
+/** Sticky header with route highlighting and a persistent booking CTA. White in light mode, navy in dark mode. */
 export function Header() {
   const [open, setOpen] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
@@ -19,8 +19,8 @@ export function Header() {
   const booking = bookingTarget()
 
   return (
-    <header className="tone-dark sticky top-0 z-50 border-b border-white/10 bg-navy-950">
-      <Container className="flex h-16 items-center justify-between gap-6 lg:h-20">
+    <header className="sticky top-0 z-50 border-b border-line bg-surface dark:bg-navy-950">
+      <Container className="flex h-16 items-center justify-between gap-3 sm:gap-6 lg:h-20">
         <Logo />
 
         <nav aria-label="Primary" className="hidden h-full xl:block">
@@ -34,7 +34,7 @@ export function Header() {
                     cn(
                       'relative inline-flex items-center px-4 text-base font-medium transition-colors',
                       'after:absolute after:inset-x-4 after:bottom-0 after:h-0.5 after:origin-left after:bg-orange-400 after:transition-transform after:duration-300',
-                      isActive ? 'text-white after:scale-x-100' : 'text-slate-300 after:scale-x-0 hover:text-white hover:after:scale-x-100',
+                      isActive ? 'text-ink after:scale-x-100' : 'text-ink-muted after:scale-x-0 hover:text-ink hover:after:scale-x-100',
                     )
                   }
                 >
@@ -52,15 +52,14 @@ export function Header() {
               Book a free consultation
             </Button>
           </div>
+          {/* Below xl: a compact button that says what it does. Its full name is read out by assistive technology. */}
           <Button
             {...booking}
-            variant="accent"
             size="sm"
             icon={<HugeIcon icon={Calendar03Icon} size={20} />}
-            iconOnly
-            className="size-11 min-h-11! px-0! xl:hidden"
+            className="gap-1.5! px-3! xl:hidden"
           >
-            Book a free consultation
+            Book<span className="sr-only"> a free consultation</span>
           </Button>
           <button
             ref={menuButton}
@@ -69,7 +68,7 @@ export function Header() {
             aria-label="Open menu"
             aria-expanded={open}
             aria-haspopup="dialog"
-            className="inline-flex size-11 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 xl:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-xl text-ink transition-colors hover:bg-ink/10 xl:hidden"
           >
             <HugeIcon icon={Menu01Icon} size={24} />
           </button>

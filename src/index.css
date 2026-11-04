@@ -137,8 +137,21 @@
 }
 
 @layer components {
-  /* Always-navy bands (hero, CTA, process strip) in both themes. */
-  .tone-dark {
+  /*
+   * Banded sections (hero, stats, work, CTA, footer, page heroes, panels) follow the theme like everything else:
+   * a pale brand tint in light mode, deep navy in dark mode. In light mode only the surface tokens change, so the
+   * ink, line, button and accent tokens inside a band stay the light-theme ones.
+   */
+  .tone-band {
+    --surface: #f1f4fc;
+    --surface-alt: #e6ebf8;
+    --raised: #ffffff;
+    --line: #d3dbee;
+    background-color: var(--surface);
+    color: var(--ink);
+  }
+
+  [data-theme="dark"] .tone-band {
     --surface: #010a36;
     --surface-alt: #061245;
     --raised: rgb(255 255 255 / 0.06);
@@ -153,8 +166,6 @@
     --accent-ink: #fb923c;
     --ring: #fdba74;
     color-scheme: dark;
-    background-color: var(--surface);
-    color: var(--ink);
   }
 }
 

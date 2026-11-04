@@ -10,17 +10,17 @@ export function AnnouncementBar() {
   const isInternal = href?.startsWith('/')
 
   return (
-    <div className="tone-dark border-b border-white/10 bg-royal-800 py-2 text-center text-sm">
+    <div className="tone-band border-b border-line py-2 text-center text-sm">
       <Container>
-        <p className="text-white">
+        <p className="text-ink">
           {message}{' '}
           {href && cta && (
             isInternal ? (
-              <Link to={href} className="font-medium text-orange-300 underline underline-offset-4">
+              <Link to={href} className="font-medium text-accent-ink underline underline-offset-4">
                 {cta}
               </Link>
             ) : (
-              <a href={href} className="font-medium text-orange-300 underline underline-offset-4">
+              <a href={href} className="font-medium text-accent-ink underline underline-offset-4">
                 {cta}
               </a>
             )

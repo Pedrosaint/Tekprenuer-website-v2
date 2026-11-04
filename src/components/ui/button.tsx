@@ -15,8 +15,6 @@ const variants = {
   accent: 'border-orange-400 bg-orange-400 text-navy-950 before:bg-white hover:text-navy-950',
   secondary: 'border-ink bg-transparent text-ink before:bg-ink hover:text-surface',
   ghost: 'border-transparent text-ink before:bg-ink/10',
-  /** Outline for navy backgrounds. */
-  glass: 'border-white/70 bg-transparent text-white before:bg-white hover:text-navy-950',
 } as const
 
 const sizes = {
@@ -31,8 +29,6 @@ interface BaseProps {
   /** Trailing arrow chip. */
   arrow?: boolean
   icon?: ReactNode
-  /** The children are an accessible name only: they are visually hidden and must not take part in the layout (no gap). */
-  iconOnly?: boolean
   fullWidth?: boolean
   className?: string
   children: ReactNode
@@ -45,7 +41,7 @@ type AsLink = BaseProps & Omit<ComponentProps<typeof Link>, keyof BaseProps | 't
 export type ButtonProps = AsButton | AsAnchor | AsLink
 
 export function Button(props: ButtonProps) {
-  const { variant = 'primary', size = 'md', arrow = false, icon, iconOnly = false, fullWidth = false, className, children, ...rest } = props
+  const { variant = 'primary', size = 'md', arrow = false, icon, fullWidth = false, className, children, ...rest } = props
 
   const classes = cn(
     'group relative isolate inline-flex items-center justify-center overflow-hidden rounded-xl border font-medium whitespace-nowrap',
@@ -61,8 +57,7 @@ export function Button(props: ButtonProps) {
   const content = (
     <>
       {icon}
-      {/* sr-only is absolutely positioned, so it adds no flex item and no gap beside the icon. */}
-      <span className={iconOnly ? 'sr-only' : undefined}>{children}</span>
+      <span>{children}</span>
       {arrow && (
         <span aria-hidden="true" className="inline-flex size-8 items-center justify-center rounded-lg bg-current/15">
           <HugeIcon icon={ArrowRight02Icon} size={18} className="-rotate-45 transition-transform duration-300 group-hover:rotate-0" />

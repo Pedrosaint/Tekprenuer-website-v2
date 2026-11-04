@@ -6,7 +6,7 @@ import { projects } from '../../data/site-content'
 /** Our work: the carousel from v1 (panel, overhanging cards, dots), cycling through every project. */
 export function FeaturedWorkSection() {
   return (
-    <Section tone="dark" aria-labelledby="work-title">
+    <Section tone="band" aria-labelledby="work-title">
       <SectionHeader
         id="work-title"
         eyebrow="Our work"
@@ -15,7 +15,7 @@ export function FeaturedWorkSection() {
       />
       <WorkCarousel projects={projects} />
       <div className="mt-6 flex justify-center">
-        <Button to="/work" variant="glass" arrow>
+        <Button to="/work" variant="secondary" arrow>
           See all work
         </Button>
       </div>

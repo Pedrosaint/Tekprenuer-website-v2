@@ -1,8 +1,7 @@
 import './quiet-three'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { usePointer } from './use-pointer'
 
 interface SceneProps {
@@ -96,14 +95,6 @@ const makeWindowTextures = () => {
   return { map: make(color, true), emissive: make(glow, true) }
 }
 
-/** Soft studio reflections for the metal, generated locally (no HDR download). */
-const makeEnvironment = (gl: THREE.WebGLRenderer): THREE.Texture => {
-  const generator = new THREE.PMREMGenerator(gl)
-  const target = generator.fromScene(new RoomEnvironment(), 0.04, 0.1, 100, { size: 64 })
-  generator.dispose()
-  return target.texture
-}
-
 const easeOutExpo = (t: number) => (t >= 1 ? 1 : 1 - 2 ** (-10 * t))
 const easeOutBack = (t: number) => {
   const c1 = 1.4
@@ -112,9 +103,25 @@ const easeOutBack = (t: number) => {
 }
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
 
-function City({ onReady }: Pick<SceneProps, 'onReady'>) {
+function City({ onReady, onCompiled }: Pick<SceneProps, 'onReady'> & { onCompiled: (done: boolean) => void }) {
   const gl = useThree((state) => state.gl)
-  const env = useMemo(() => makeEnvironment(gl), [gl])
+  const scene = useThree((state) => state.scene)
+  const camera = useThree((state) => state.camera)
+
+  // Compile the shader programs in parallel, off the main thread, before the first frame is drawn. Drawing first would
+  // link them one by one and block the page; the render loop starts once this settles (a failure just means the old way).
+  useEffect(() => {
+    let cancelled = false
+    gl.compileAsync(scene, camera)
+      .catch(() => undefined)
+      .then(() => {
+        if (!cancelled) onCompiled(true)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [gl, scene, camera, onCompiled])
+
   const towers = useMemo(() => buildTowers(), [])
   const textures = useMemo(() => makeWindowTextures(), [])
 
@@ -126,14 +133,12 @@ function City({ onReady }: Pick<SceneProps, 'onReady'>) {
       emissiveMap: textures.emissive,
       emissive: new THREE.Color('#ffffff'),
       emissiveIntensity: 0.85,
-      metalness: 0.4,
-      roughness: 0.42,
-      envMap: env,
-      envMapIntensity: 0.6,
+      metalness: 0.1,
+      roughness: 0.45,
     })
-    const roof = new THREE.MeshStandardMaterial({ color: '#3552d6', metalness: 0.7, roughness: 0.3, envMap: env, envMapIntensity: 0.7 })
+    const roof = new THREE.MeshStandardMaterial({ color: '#3552d6', metalness: 0.3, roughness: 0.35 })
     return [side, side, roof, roof, side, side]
-  }, [textures, env])
+  }, [textures])
 
   const geometries = useMemo(
     () =>
@@ -169,8 +174,6 @@ function City({ onReady }: Pick<SceneProps, 'onReady'>) {
     }
     return positions
   }, [])
-
-  useEffect(() => () => env.dispose(), [env])
 
   useFrame((state, delta) => {
     if (!reported.current) {
@@ -218,7 +221,7 @@ function City({ onReady }: Pick<SceneProps, 'onReady'>) {
 
   return (
     <>
-      <hemisphereLight args={['#c4d4ff', '#0a1450', 0.8]} />
+      <hemisphereLight args={['#dfe7ff', '#6f82da', 3.1]} />
       <directionalLight position={[4, 7, 4]} intensity={2.4} color="#ffffff" />
       <pointLight position={[-5, 2, 4]} intensity={40} distance={16} color="#fb923c" />
       <pointLight position={[4, 3, -4]} intensity={30} distance={14} color="#5a85f5" />
@@ -227,15 +230,15 @@ function City({ onReady }: Pick<SceneProps, 'onReady'>) {
         {/* Platform */}
         <mesh position={[0, 0.02, 0]}>
           <cylinderGeometry args={[3.35, 3.35, 0.14, 48]} />
-          <meshStandardMaterial color="#3a5be0" metalness={0.9} roughness={0.22} envMap={env} envMapIntensity={0.8} />
+          <meshStandardMaterial color="#7488e0" metalness={0.35} roughness={0.3} />
         </mesh>
         <mesh position={[0, 0.12, 0]}>
           <cylinderGeometry args={[3.05, 3.05, 0.1, 48]} />
-          <meshStandardMaterial color="#1c36a8" metalness={0.85} roughness={0.3} envMap={env} envMapIntensity={0.8} />
+          <meshStandardMaterial color="#6670cc" metalness={0.3} roughness={0.35} />
         </mesh>
         <mesh position={[0, 0.16, 0]}>
           <cylinderGeometry args={[2.75, 2.75, 0.06, 48]} />
-          <meshStandardMaterial color="#0e1d78" metalness={0.8} roughness={0.35} envMap={env} envMapIntensity={0.8} />
+          <meshStandardMaterial color="#4a5098" metalness={0.3} roughness={0.4} />
         </mesh>
         <mesh ref={ring} position={[0, 0.1, 0]} rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[3.38, 0.028, 8, 96]} />
@@ -254,7 +257,7 @@ function City({ onReady }: Pick<SceneProps, 'onReady'>) {
         </group>
         <mesh ref={spire} position={[0.05, 4, 0]}>
           <cylinderGeometry args={[0.015, 0.05, 0.8, 8]} />
-          <meshStandardMaterial color="#cfe0ff" metalness={0.9} roughness={0.2} envMap={env} envMapIntensity={0.8} />
+          <meshStandardMaterial color="#cfe0ff" metalness={0.3} roughness={0.3} />
         </mesh>
         <mesh ref={beacon} position={[0.05, 4.4, 0]}>
           <sphereGeometry args={[0.07, 16, 16]} />
@@ -275,16 +278,17 @@ function City({ onReady }: Pick<SceneProps, 'onReady'>) {
 
 export default function CityScene({ active, onReady }: SceneProps) {
   const coarse = window.matchMedia('(pointer: coarse)').matches
+  const [compiled, setCompiled] = useState(false)
   return (
     <Canvas
-      frameloop={active ? 'always' : 'never'}
+      frameloop={active && compiled ? 'always' : 'never'}
       dpr={[1, coarse ? 1.25 : 1.75]}
       camera={{ fov: 30, position: [0, 4.4, 12.8], near: 0.1, far: 60 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       onCreated={({ camera }) => camera.lookAt(0, 1.6, 0)}
       resize={{ scroll: false }}
     >
-      <City onReady={onReady} />
+      <City onReady={onReady} onCompiled={setCompiled} />
     </Canvas>
   )
 }

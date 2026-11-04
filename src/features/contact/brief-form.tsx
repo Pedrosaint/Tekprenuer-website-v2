@@ -4,6 +4,7 @@ import { HugeIcon } from '../../components/ui/huge-icon'
 import type { ChangeEvent, FormEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { budgetRanges, pricing, services, timelines } from '../../data/site-content'
+import { useHydrated } from '../../lib/use-hydrated'
 import { Button } from '../../components/ui/button'
 import { Heading } from '../../components/ui/heading'
 import {
@@ -21,26 +22,43 @@ type Status = 'idle' | 'sending' | 'sent' | 'fallback'
 
 const serviceOptions = ['Free consultation', ...services.map((service) => service.title), 'Something else']
 
-/** Pre-selects the interest from ?topic= (a service slug, "consultation" or "quote") and ?package=. */
-const initialValues = (params: URLSearchParams): BriefValues => {
-  const topic = params.get('topic')
-  const pack = pricing.find((item) => item.id === params.get('package'))
-  const service =
-    topic === 'consultation'
-      ? 'Free consultation'
-      : (services.find((item) => item.slug === topic)?.title ?? '')
-  return {
-    ...emptyBrief,
-    service,
-    message: pack ? `I would like a quote for the ${pack.name} package.\n\n` : '',
-  }
+/** The interest named by ?topic= (a service slug or "consultation"), or '' when there is none. */
+const serviceForTopic = (topic: string | null): string =>
+  topic === 'consultation' ? 'Free consultation' : (services.find((item) => item.slug === topic)?.title ?? '')
+
+const messageForPackage = (id: string | null): string => {
+  const pack = pricing.find((item) => item.id === id)
+  return pack ? `I would like a quote for the ${pack.name} package.\n\n` : ''
 }
 
 const fieldOrder: (keyof BriefValues)[] = ['name', 'email', 'phone', 'company', 'service', 'budget', 'timeline', 'message']
 
 export function BriefForm() {
   const [params] = useSearchParams()
-  const [values, setValues] = useState<BriefValues>(() => initialValues(params))
+  const hydrated = useHydrated()
+  const topic = params.get('topic')
+  const packageId = params.get('package')
+
+  // What the visitor has typed or chosen. The URL (?topic=, ?package=) only supplies the starting point behind it. It is
+  // applied once the page has hydrated: the prerendered HTML has no URL parameters, and React would otherwise keep the
+  // server's empty selection after hydration.
+  const [edits, setEdits] = useState<Partial<BriefValues>>({})
+  const values: BriefValues = {
+    ...emptyBrief,
+    ...(hydrated ? { service: serviceForTopic(topic), message: messageForPackage(packageId) } : {}),
+    ...edits,
+  }
+
+  // A different ?topic= (the header "Book" button pressed while this form is open) replaces an earlier choice of interest.
+  const [seenTopic, setSeenTopic] = useState(topic)
+  if (topic !== seenTopic) {
+    setSeenTopic(topic)
+    setEdits((current) => {
+      const next = { ...current }
+      delete next.service
+      return next
+    })
+  }
   const [errors, setErrors] = useState<BriefErrors>({})
   const [status, setStatus] = useState<Status>('idle')
   const [openedAt] = useState(() => Date.now())
@@ -49,7 +67,7 @@ export function BriefForm() {
 
   const set = (name: keyof BriefValues) => (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const value = event.target.value
-    setValues((current) => ({ ...current, [name]: value }))
+    setEdits((current) => ({ ...current, [name]: value }))
     if (errors[name]) setErrors((current) => ({ ...current, [name]: undefined }))
   }
 
@@ -93,7 +111,7 @@ export function BriefForm() {
         <Button
           variant="secondary"
           onClick={() => {
-            setValues(emptyBrief)
+            setEdits({})
             setStatus('idle')
           }}
         >

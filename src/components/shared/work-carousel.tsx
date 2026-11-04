@@ -36,7 +36,7 @@ function WorkSlide({ project, index, total }: { project: Project; index: number;
             className={cn('h-auto max-h-20 w-auto object-contain', project.logo === 'accessum' && 'max-h-14')}
           />
         </div>
-        <div className="flex-1 rounded-2xl border border-white/60 bg-white/10 px-6 pt-21 pb-6 text-white transition-colors duration-300 group-hover:bg-white/20">
+        <div className="flex-1 rounded-2xl border border-white/60 bg-[color-mix(in_srgb,var(--color-rust)_90%,white)] px-6 pt-21 pb-6 text-white transition-colors duration-300 group-hover:bg-[color-mix(in_srgb,var(--color-rust)_80%,white)] dark:bg-white/10 dark:group-hover:bg-white/20">
           <p className="text-base text-white">{project.category}</p>
           <h3 className="mt-1 font-display text-2xl font-medium text-white">{project.name}</h3>
           <p className="mt-3 text-base leading-relaxed text-white">{project.summary}</p>

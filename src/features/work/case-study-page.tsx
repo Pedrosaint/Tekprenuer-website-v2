@@ -51,7 +51,7 @@ export function Component() {
               Start a similar project
             </Button>
             {study.liveUrl && (
-              <Button href={study.liveUrl} variant="glass" size="lg" icon={<HugeIcon icon={LinkSquare02Icon} size={18} />}>
+              <Button href={study.liveUrl} variant="secondary" size="lg" icon={<HugeIcon icon={LinkSquare02Icon} size={18} />}>
                 Visit live site
               </Button>
             )}

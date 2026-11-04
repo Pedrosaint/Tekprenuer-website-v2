@@ -260,7 +260,7 @@ export const about = {
 export const stats: Stat[] = [
   { value: 50, suffix: '+', label: 'Projects Delivered' },
   { value: 98, suffix: '%', label: 'Client Satisfaction' },
-  { value: 2, suffix: '+', label: 'Years Experience' },
+  { value: 5, suffix: '+', label: 'Years Experience' },
   { value: 24, suffix: '/7', label: 'Support Available', display: '24/7', note: 'Priority support for retained clients' },
 ]
 

@@ -22,11 +22,11 @@ const sitemap = [
   { label: 'Contact', to: '/contact' },
 ]
 
-const linkClass = 'inline-flex min-h-8 items-center text-ink-muted transition-colors hover:text-white'
+const linkClass = 'inline-flex min-h-8 items-center text-ink-muted transition-colors hover:text-ink'
 
 export function Footer() {
   return (
-    <footer className="tone-dark border-t border-white/10 pt-16 pb-8">
+    <footer className="tone-band border-t border-line pt-16 pb-8">
       <Container className="flex flex-col gap-12">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.3fr_0.7fr_1fr_1.1fr]">
           <div className="flex flex-col gap-5">
@@ -38,7 +38,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Sitemap">
-            <h2 className="mb-4 font-sans text-base font-medium text-white">Sitemap</h2>
+            <h2 className="mb-4 font-sans text-base font-medium text-ink">Sitemap</h2>
             <ul className="flex flex-col">
               {sitemap.map((item) => (
                 <li key={item.to}>
@@ -51,7 +51,7 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Services">
-            <h2 className="mb-4 font-sans text-base font-medium text-white">Services</h2>
+            <h2 className="mb-4 font-sans text-base font-medium text-ink">Services</h2>
             <ul className="flex flex-col">
               {services.map((service) => (
                 <li key={service.slug}>
@@ -64,33 +64,33 @@ export function Footer() {
           </nav>
 
           <div>
-            <h2 className="mb-4 font-sans text-base font-medium text-white">Contact</h2>
+            <h2 className="mb-4 font-sans text-base font-medium text-ink">Contact</h2>
             <ul className="flex flex-col gap-3 text-ink-muted">
               <li className="flex items-start gap-3">
-                <HugeIcon icon={Mail01Icon} size={18} className="mt-1 shrink-0 text-orange-400" />
-                <a href={`mailto:${site.contact.email}`} className="transition-colors hover:text-white">
+                <HugeIcon icon={Mail01Icon} size={18} className="mt-1 shrink-0 text-accent-ink" />
+                <a href={`mailto:${site.contact.email}`} className="transition-colors hover:text-ink">
                   {site.contact.email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <HugeIcon icon={Call02Icon} size={18} className="mt-1 shrink-0 text-orange-400" />
-                <a href={`tel:${site.contact.phone}`} className="transition-colors hover:text-white">
+                <HugeIcon icon={Call02Icon} size={18} className="mt-1 shrink-0 text-accent-ink" />
+                <a href={`tel:${site.contact.phone}`} className="transition-colors hover:text-ink">
                   {site.contact.phoneDisplay}
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <HugeIcon icon={WhatsappIcon} size={18} className="mt-1 shrink-0 text-orange-400" />
+                <HugeIcon icon={WhatsappIcon} size={18} className="mt-1 shrink-0 text-accent-ink" />
                 <a
                   href={whatsappHref(site.contact.whatsappWelcome)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors hover:text-white"
+                  className="transition-colors hover:text-ink"
                 >
                   Message us on WhatsApp
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <HugeIcon icon={Location01Icon} size={18} className="mt-1 shrink-0 text-orange-400" />
+                <HugeIcon icon={Location01Icon} size={18} className="mt-1 shrink-0 text-accent-ink" />
                 <span>
                   {site.contact.office}
                   <br />
@@ -101,10 +101,10 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-ink-muted md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-4 border-t border-line pt-6 text-sm text-ink-muted md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} {site.name}.{' '}
-            <a href={site.url} className="transition-colors hover:text-white">
+            <a href={site.url} className="transition-colors hover:text-ink">
               www.tekprenuers.com
             </a>
           </p>

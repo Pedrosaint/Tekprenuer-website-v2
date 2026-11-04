@@ -7,8 +7,8 @@ import { Heading } from './heading'
 const tones = {
   light: 'bg-surface text-ink',
   alt: 'bg-surface-alt text-ink',
-  /** Always navy, in both themes. Re-declares the semantic tokens for its children. */
-  dark: 'tone-dark relative isolate overflow-hidden',
+  /** A band: navy in dark mode, a pale brand tint in light mode (see .tone-band in index.css). */
+  band: 'tone-band relative isolate overflow-hidden',
 } as const
 
 const spacing = {

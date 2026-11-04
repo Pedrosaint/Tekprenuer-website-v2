@@ -3,12 +3,11 @@ import { cn } from '../../lib/cn'
 import { Picture } from '../ui/picture'
 
 interface LogoProps {
-  /** Render the blue logo as white, for navy backgrounds. */
-  onDark?: boolean
   className?: string
 }
 
-export function Logo({ onDark = true, className }: LogoProps) {
+/** The artwork is blue: shown as is in light mode and turned white (a CSS filter) in dark mode. */
+export function Logo({ className }: LogoProps) {
   return (
     <Link to="/" aria-label="Tekprenuers home" className={cn('inline-flex shrink-0 items-center', className)}>
       <Picture
@@ -16,7 +15,7 @@ export function Logo({ onDark = true, className }: LogoProps) {
         alt="Tekprenuers"
         priority
         sizes="160px"
-        className={cn('h-8 w-auto sm:h-9', onDark && 'brightness-0 invert')}
+        className="h-7 w-auto min-[400px]:h-8 sm:h-9 dark:brightness-0 dark:invert"
       />
     </Link>
   )

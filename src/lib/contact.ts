@@ -97,6 +97,6 @@ export const mailtoHref = (values: BriefValues): string =>
 
 export const whatsappHref = (text: string): string => `https://wa.me/${site.contact.whatsappNumber}?text=${encodeURIComponent(text)}`
 
-/** Booking link when the client has supplied one, otherwise the contact form pre-set to a consultation. */
+/** Booking link when the client has supplied one, otherwise the contact form (scrolled to) pre-set to a consultation. */
 export const bookingTarget = (): { href: string } | { to: string } =>
-  isPlaceholder(site.contact.bookingUrl) ? { to: '/contact?topic=consultation' } : { href: site.contact.bookingUrl }
+  isPlaceholder(site.contact.bookingUrl) ? { to: '/contact?topic=consultation#brief' } : { href: site.contact.bookingUrl }

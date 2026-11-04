@@ -81,7 +81,7 @@ export function MobileDrawer({ open, onClose, returnFocusTo }: MobileDrawerProps
             role="dialog"
             aria-modal="true"
             aria-label="Site menu"
-            className="tone-dark absolute inset-y-0 right-0 flex w-full flex-col sm:w-96 gap-8 overflow-y-auto border-l border-white/10 px-6 py-5"
+            className="tone-band absolute inset-y-0 right-0 flex w-full flex-col sm:w-96 gap-8 overflow-y-auto border-l border-line px-6 py-5"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -95,7 +95,7 @@ export function MobileDrawer({ open, onClose, returnFocusTo }: MobileDrawerProps
                   type="button"
                   onClick={onClose}
                   aria-label="Close menu"
-                  className="inline-flex size-11 items-center justify-center rounded-xl text-ink transition-colors hover:bg-white/10"
+                  className="inline-flex size-11 items-center justify-center rounded-xl text-ink transition-colors hover:bg-ink/10"
                 >
                   <HugeIcon icon={Cancel01Icon} size={22} />
                 </button>
@@ -117,8 +117,8 @@ export function MobileDrawer({ open, onClose, returnFocusTo }: MobileDrawerProps
                       onClick={onClose}
                       className={({ isActive }) =>
                         cn(
-                          'flex min-h-14 items-center justify-between border-b border-white/10 font-display text-xl font-medium transition-colors',
-                          isActive ? 'text-orange-400' : 'text-white hover:text-orange-300',
+                          'flex min-h-14 items-center justify-between border-b border-line font-display text-xl font-medium transition-colors',
+                          isActive ? 'text-accent-ink' : 'text-ink hover:text-accent-ink',
                         )
                       }
                     >

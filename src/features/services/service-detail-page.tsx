@@ -37,13 +37,13 @@ export function Component() {
             <Button to={`/contact?topic=${service.slug}`} size="lg" arrow>
               Request a quote
             </Button>
-            <Button to="/contact?topic=consultation" variant="glass" size="lg">
+            <Button to="/contact?topic=consultation" variant="secondary" size="lg">
               Book a free consultation
             </Button>
           </>
         }
         aside={
-          <span className="hidden size-56 items-center justify-center rounded-xl bg-white/5 text-white ring-1 ring-white/15 lg:inline-flex">
+          <span className="hidden size-56 items-center justify-center rounded-xl bg-ink/5 text-ink ring-1 ring-ink/10 lg:inline-flex">
             <Icon name={service.icon} size={128} />
           </span>
         }

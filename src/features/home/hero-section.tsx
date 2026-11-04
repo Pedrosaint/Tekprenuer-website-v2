@@ -18,18 +18,18 @@ import { PillarCards } from './pillars-section'
 export function HeroSection() {
   return (
     <Section
-      tone="dark"
+      tone="band"
       eager
       spacing="none"
       className="pt-10 pb-16 sm:pt-14 sm:pb-20 lg:pt-16 lg:pb-24"
       aria-labelledby="hero-title"
     >
-      <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-6 lg:has-data-[scene=off]:grid-cols-1">
+      <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-6 lg:has-data-[scene=off]:grid-cols-1 motion-reduce:lg:grid-cols-1">
         <div className="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left">
-          <Badge tone="glass">{hero.eyebrow}</Badge>
+          <Badge tone="soft">{hero.eyebrow}</Badge>
 
-          <Heading id="hero-title" level={1} size="display" className="text-white">
-            Promote Your Business With <span className="text-orange-400">Tech</span>
+          <Heading id="hero-title" level={1} size="display" className="text-ink">
+            Promote Your Business With <span className="text-accent-ink">Tech</span>
           </Heading>
 
           <p className="text-lead text-ink-muted lg:w-4/5">{hero.subcopy}</p>
@@ -42,7 +42,7 @@ export function HeroSection() {
             </Magnetic>
             <Button
               {...bookingTarget()}
-              variant="glass"
+              variant="secondary"
               size="lg"
               icon={<HugeIcon icon={Calendar03Icon} size={20} />}
             >
@@ -50,14 +50,15 @@ export function HeroSection() {
             </Button>
           </div>
 
-          <p className="flex items-center gap-3 text-base font-medium text-white">
+          <p className="flex items-center gap-3 text-base font-medium text-ink">
             <span aria-hidden="true" className="h-0.5 w-8 bg-orange-400" />
             {trust.clientCount ? `Trusted by ${trust.clientCount}+ businesses` : trust.headline}
           </p>
         </div>
 
-        {/* No picture: a flat placeholder holds this space (so nothing jumps) until the live 3D city has drawn. */}
-        <SceneHost variant="city" className="relative w-full data-[scene=off]:hidden" fallback={<CityPlaceholder />} />
+        {/* No picture: a flat placeholder holds this space (so nothing jumps) until the live 3D city has drawn. It is hidden up front for
+            reduced motion (pure CSS, so there is no flash and no shift); other devices that cannot run 3D collapse it once the page is up. */}
+        <SceneHost variant="city" className="relative w-full data-[scene=off]:hidden motion-reduce:hidden" fallback={<CityPlaceholder />} />
       </div>
 
       <PillarCards />

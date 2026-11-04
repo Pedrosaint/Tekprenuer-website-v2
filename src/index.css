@@ -36,7 +36,7 @@
   --color-royal-400: #5a85f5;
   --color-royal-500: #2f5ae0;
   --color-royal-600: #1237c4;
-  --color-royal-700: #021e9c;
+  --color-royal-700: #001e9a; /* the logo's exact colour */
   --color-royal-800: #051a7a;
   --color-royal-900: #0a1a5c;
 
@@ -109,10 +109,10 @@
   --ink: #0b1230;
   --ink-muted: #475569;
   --line: #dde3ee;
-  --brand: #021e9c;
-  --cta: #010a36;
+  --brand: #001e9a;
+  --cta: #001e9a;
   --cta-hover: #1237c4;
-  --cta-sweep: #021e9c;
+  --cta-sweep: #010a36;
   --cta-ink: #ffffff;
   --accent-ink: #c2410c;
   --ring: #2f5ae0;

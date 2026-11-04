@@ -12,7 +12,7 @@ export function PillarCards() {
           <Reveal delay={index * 0.1} className="h-full">
             <TiltCard className="h-full rounded-card">
               <div className="flex h-full flex-col gap-4 rounded-xl border border-line bg-raised p-7">
-                <span className="inline-flex size-20 items-center justify-center rounded-lg bg-ink/5 text-ink ring-1 ring-ink/10">
+                <span className="inline-flex size-20 items-center justify-center rounded-lg bg-brand/10 text-brand ring-1 ring-brand/15 dark:bg-ink/5 dark:text-ink dark:ring-ink/10">
                   <Icon name={pillar.icon} size={48} />
                 </span>
                 <h2 className="font-display text-xl font-medium text-ink">{pillar.title}</h2>

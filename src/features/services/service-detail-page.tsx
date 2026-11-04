@@ -43,7 +43,7 @@ export function Component() {
           </>
         }
         aside={
-          <span className="hidden size-56 items-center justify-center rounded-xl bg-ink/5 text-ink ring-1 ring-ink/10 lg:inline-flex">
+          <span className="hidden size-56 items-center justify-center rounded-xl bg-brand/10 text-brand ring-1 ring-brand/15 dark:bg-ink/5 dark:text-ink dark:ring-ink/10 lg:inline-flex">
             <Icon name={service.icon} size={128} />
           </span>
         }
